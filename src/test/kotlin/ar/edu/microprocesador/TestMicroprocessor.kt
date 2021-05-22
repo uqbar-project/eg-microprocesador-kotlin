@@ -59,7 +59,7 @@ class TestMicroprocessor : DescribeSpec({
             micro.aAcumulator shouldBe 25
             micro.bAcumulator shouldBe 0
         }
-        it("ejecuta correctamente un programa con IFNZ") {
+        it("ejecuta correctamente un programa con IFNZ - rama true") {
             micro.run(listOf(
                 LODV(15),
                 SWAP(),
@@ -73,6 +73,19 @@ class TestMicroprocessor : DescribeSpec({
             micro.programCounter shouldBe 6
             micro.aAcumulator shouldBe 0
             micro.bAcumulator shouldBe 41
+        }
+        it("ejecuta correctamente un programa con IFNZ - rama false") {
+            micro.run(listOf(
+                LODV(10),
+                SWAP(),
+                IFNZ(listOf(
+                    SWAP()
+                ))
+            ))
+
+            micro.programCounter shouldBe 3
+            micro.aAcumulator shouldBe 0
+            micro.bAcumulator shouldBe 10
         }
         it("ejecuta correctamente un programa con WHNZ que suma los primeros 4 números") {
             micro.run(listOf(

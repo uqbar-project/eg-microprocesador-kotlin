@@ -1,10 +1,39 @@
 package ar.edu.microprocesador
 
 interface Microprocessor {
+
     /**
-     * programacion: carga y ejecuta un conjunto de instrucciones en memoria
+     * carga el programa en memoria, el microcontrolador debe estar detenido
      */
-    fun run(program: List<Instruction>)
+    fun loadProgram(program: List<Byte>)
+
+
+    // control de programa
+    /**
+     * Ejecuta un programa cargado en memoria
+     */
+    fun run()
+
+    /**
+     * Borra la memoria de datos y comienza la ejecucion del programa cargado
+     * actualmente
+     */
+    fun start()
+
+    /**
+     * Detiene el programa en ejecucion
+     */
+    fun stop()
+
+    /**
+     * Ejecuta la siguiente instruccion del programa actual
+     */
+    fun step(): Instruction
+
+    /**
+     * Inicializa el microcontrolador
+     */
+    fun reset()
 
     /**
      * Getters y setters de acumuladores A y B
@@ -18,8 +47,6 @@ interface Microprocessor {
     fun advanceProgram()
     val programCounter: Byte
 
-    fun reset()
-
     /**
      * Manejo de dirección de memoria de datos: getter y setter
      */
@@ -30,14 +57,43 @@ interface Microprocessor {
 }
 
 class MicroprocessorImpl : Microprocessor, Cloneable {
-    override fun run(program: List<Instruction>) {
-        program.forEach { instruction -> instruction.execute(this) }
-    }
-
     override var aAcumulator: Byte = 0
     override var bAcumulator: Byte = 0
     override var programCounter: Byte = 0
     var data = mutableMapOf<Int, Byte>()
+    var programStarted: Boolean = false
+
+    lateinit var programIterator: ProgramIterator
+
+    override fun loadProgram(program: List<Byte>) {
+        if (this.programStarted) throw SystemException("Ya hay un programa en ejecución")
+        this.reset()
+        this.programIterator = ProgramIterator(program)
+    }
+
+    override fun start() {
+        this.programStarted = true
+    }
+
+    override fun stop() {
+        this.programStarted = false
+    }
+
+    override fun step(): Instruction {
+        if (!programStarted) throw SystemException("El programa no está iniciado")
+        if (!programIterator.hasNext()) throw SystemException("No hay más instrucciones para ejecutar")
+        val proximaInstruccion = programIterator.next()
+        proximaInstruccion.execute(this)
+        return proximaInstruccion
+    }
+
+    override fun run() {
+        this.start()
+        while (programIterator.hasNext()) {
+            this.step()
+        }
+        this.stop()
+    }
 
     override fun advanceProgram() {
         programCounter++

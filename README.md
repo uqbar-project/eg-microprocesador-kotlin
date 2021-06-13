@@ -1,10 +1,10 @@
 
 ## Microprocesador
 
-[![build](https://github.com/uqbar-project/eg-microprocesador-kotlin/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/uqbar-project/eg-microprocesador-kotlin/actions/workflows/build.yml) [![coverage](https://codecov.io/gh/uqbar-project/eg-microprocesador-kotlin/branch/master/graph/badge.svg)](https://codecov.io/gh/uqbar-project/eg-microprocesador-kotlin/branch/master/graph/badge.svg)
+[![build](https://github.com/uqbar-project/eg-microprocesador-kotlin/actions/workflows/build.yml/badge.svg?branch=creacionales)](https://github.com/uqbar-project/eg-microprocesador-kotlin/actions/workflows/build.yml) [![coverage](https://codecov.io/gh/uqbar-project/eg-microprocesador-kotlin/branch/creacionales/graph/badge.svg)](https://codecov.io/gh/uqbar-project/eg-microprocesador-kotlin/branch/creacionales/graph/badge.svg)
 
 ![image](./images/microprocessor.png)
 
-### Branch master
+### Branch creacionales
 
-Está basado en [esta explicación](https://docs.google.com/document/d/1-esJOhKb_yAABls-XdRrEYHzCv4yn-qqFtCu3xpgCg0/edit?usp=sharing)
+Está basado en [esta explicación](https://docs.google.com/document/d/1ILsxAvgZwPD4sTtB-rBq7wfJZf22e9G6qpllglAbT2g/edit?usp=sharing)

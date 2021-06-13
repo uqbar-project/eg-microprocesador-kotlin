@@ -17,6 +17,8 @@ abstract class Instruction {
     fun undo(micro: Microprocessor) {
         micro.copyFrom(microBefore)
     }
+
+    open fun prepare(programIterator: ProgramIterator) {}
 }
 
 class NOP : Instruction() {
@@ -26,9 +28,12 @@ class NOP : Instruction() {
 
 }
 
-class LODV(val value: Byte) : Instruction() {
+class LODV(var value: Byte) : Instruction() {
     override fun doExecute(micro: Microprocessor) {
         micro.aAcumulator = value
+    }
+    override fun prepare(programIterator: ProgramIterator) {
+        value = programIterator.nextValue()
     }
 }
 
@@ -58,52 +63,4 @@ class ADD : Instruction() {
         micro.aAcumulator = aAcumulator.toByte()
         micro.bAcumulator = bAcumulator.toByte()
     }
-}
-
-abstract class CompoundNotZeroInstruction(open val instructions: List<Instruction>) : Instruction() {
-
-    override fun doExecute(micro: Microprocessor) {
-        micro.run(instructions)
-    }
-
-    fun Microprocessor.notZero() = this.aAcumulator.toInt() != 0
-}
-
-class IFNZ(override val instructions: List<Instruction>) : CompoundNotZeroInstruction(instructions) {
-
-    override fun doExecute(micro: Microprocessor) {
-        if (micro.notZero()) {
-            super.doExecute(micro)
-        }
-    }
-}
-
-class WHNZ(override val instructions: List<Instruction>) : CompoundNotZeroInstruction(instructions) {
-
-    override fun doExecute(micro: Microprocessor) {
-        while (micro.notZero()) {
-            super.doExecute(micro)
-        }
-    }
-}
-
-// Instrucciones para testear el while
-class STR(val address: Int) : Instruction() {
-    override fun doExecute(micro: Microprocessor) {
-        micro.setData(address, micro.aAcumulator)
-    }
-}
-
-class LOD(val address: Int) : Instruction() {
-    override fun doExecute(micro: Microprocessor) {
-        micro.aAcumulator = micro.getData(address)
-    }
-}
-
-class SUB : Instruction() {
-    override fun doExecute(micro: Microprocessor) {
-        micro.aAcumulator = (micro.aAcumulator - micro.bAcumulator).toByte()
-        micro.bAcumulator = 0
-    }
-
 }

@@ -3,12 +3,30 @@ package ar.edu.microprocesador
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.assertThrows
 
 class TestMicroprocessor : DescribeSpec({
     isolationMode = IsolationMode.InstancePerTest
 
     describe("dado un microprocesador") {
         val micro : Microprocessor = MicroprocessorImpl()
+        it("si quiero ejecutar un paso y no hay un programa cargado da error") {
+            assertThrows<SystemException> { micro.step() }
+        }
+        it("si quiero ejecutar un paso con un programa cargado y no se inició debe dar error") {
+            micro.loadProgram(ProgramBuilder()
+                .NOP()
+                .build()
+            )
+            assertThrows<SystemException> { micro.step() }
+        }
+        it("no puedo generar un programa vacío para cargarlo") {
+            assertThrows<BusinessException> {
+                micro.loadProgram(ProgramBuilder()
+                    .build()
+                )
+            }
+        }
         it("ejecuta correctamente el programa NOP") {
             micro.loadProgram(ProgramBuilder()
                 .NOP()

@@ -20,6 +20,28 @@ class TestMicroprocessor : DescribeSpec({
             )
             assertThrows<SystemException> { micro.step() }
         }
+        it("si quiero ejecutar un programa manualmente más allá de la última instrucción debe dar error") {
+            micro.loadProgram(ProgramBuilder()
+                .NOP()
+                .build()
+            )
+            micro.start()
+            micro.step()
+            assertThrows<SystemException> { micro.step() }
+        }
+        it("si quiero ejecutar una instrucción que no existe debe dar error") {
+            val instruccionInexistente = 150.toByte()
+            micro.loadProgram(listOf(instruccionInexistente))
+            assertThrows<SystemException> { micro.step() }
+        }
+        it("si quiero cargar un programa cuando hay otro en ejecución debe dar error") {
+            val program = ProgramBuilder()
+                .NOP()
+                .build()
+            micro.loadProgram(program)
+            micro.start()
+            assertThrows<SystemException> { micro.loadProgram(program) }
+        }
         it("no puedo generar un programa vacío para cargarlo") {
             assertThrows<BusinessException> {
                 micro.loadProgram(ProgramBuilder()

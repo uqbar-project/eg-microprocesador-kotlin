@@ -1,22 +1,21 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.4.32"
+    kotlin("jvm") version "1.6.10"
     jacoco
 }
 
-group = "ar.edu.algo2"
+group = "ar.edu.unsam.algo2"
 version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
 }
 
-val kotestVersion = "4.4.3"
+val kotestVersion = "5.1.0"
 
 dependencies {
     implementation(kotlin("stdlib"))
-    testImplementation("io.mockk:mockk:1.11.0")
     testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
     testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
     testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
@@ -42,7 +41,7 @@ tasks.jacocoTestReport {
 }
 
 jacoco {
-    toolVersion = "0.8.6"
+    toolVersion = "0.8.7"
 }
 
 tasks.jacocoTestReport {

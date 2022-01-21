@@ -1,4 +1,4 @@
-package ar.edu.microprocesador
+package ar.edu.unsam.algo2.microprocesador
 
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.DescribeSpec
@@ -14,14 +14,16 @@ class TestMicroprocessor : DescribeSpec({
             assertThrows<SystemException> { micro.step() }
         }
         it("si quiero ejecutar un paso con un programa cargado y no se inició debe dar error") {
-            micro.loadProgram(ProgramBuilder()
+            micro.loadProgram(
+                ProgramBuilder()
                 .NOP()
                 .build()
             )
             assertThrows<SystemException> { micro.step() }
         }
         it("si quiero ejecutar un programa manualmente más allá de la última instrucción debe dar error") {
-            micro.loadProgram(ProgramBuilder()
+            micro.loadProgram(
+                ProgramBuilder()
                 .NOP()
                 .build()
             )
@@ -44,13 +46,15 @@ class TestMicroprocessor : DescribeSpec({
         }
         it("no puedo generar un programa vacío para cargarlo") {
             assertThrows<BusinessException> {
-                micro.loadProgram(ProgramBuilder()
+                micro.loadProgram(
+                    ProgramBuilder()
                     .build()
                 )
             }
         }
         it("ejecuta correctamente el programa NOP") {
-            micro.loadProgram(ProgramBuilder()
+            micro.loadProgram(
+                ProgramBuilder()
                 .NOP()
                 .NOP()
                 .NOP()
@@ -61,7 +65,8 @@ class TestMicroprocessor : DescribeSpec({
             micro.programCounter shouldBe 3
         }
         it("ejecuta correctamente una suma chica") {
-            micro.loadProgram(ProgramBuilder()
+            micro.loadProgram(
+                ProgramBuilder()
                 .LODV(10)
                 .SWAP()
                 .LODV(22)
@@ -75,7 +80,8 @@ class TestMicroprocessor : DescribeSpec({
             micro.bAcumulator shouldBe 0
         }
         it("ejecuta correctamente una suma grande") {
-            micro.loadProgram(ProgramBuilder()
+            micro.loadProgram(
+                ProgramBuilder()
                 .LODV(120)
                 .SWAP()
                 .LODV(15)
@@ -89,7 +95,8 @@ class TestMicroprocessor : DescribeSpec({
             micro.bAcumulator shouldBe 8
         }
         it("podemos deshacer la instrucción SWAP") {
-            micro.loadProgram(ProgramBuilder()
+            micro.loadProgram(
+                ProgramBuilder()
                 .LODV(25)
                 .SWAP()
                 .build()

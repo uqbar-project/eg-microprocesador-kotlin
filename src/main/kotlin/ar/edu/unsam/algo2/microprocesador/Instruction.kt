@@ -1,4 +1,4 @@
-package ar.edu.microprocesador
+package ar.edu.unsam.algo2.microprocesador
 
 import kotlin.comparisons.minOf
 import kotlin.comparisons.maxOf

@@ -1,4 +1,4 @@
-package ar.edu.microprocesador
+package ar.edu.unsam.algo2.microprocesador
 
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.DescribeSpec

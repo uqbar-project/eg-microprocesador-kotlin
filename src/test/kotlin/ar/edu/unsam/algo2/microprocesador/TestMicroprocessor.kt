@@ -9,23 +9,23 @@ class TestMicroprocessor : DescribeSpec({
     isolationMode = IsolationMode.InstancePerTest
 
     describe("dado un microprocesador") {
-        val micro : Microprocessor = MicroprocessorImpl()
+        val micro: Microprocessor = MicroprocessorImpl()
         it("si quiero ejecutar un paso y no hay un programa cargado da error") {
             assertThrows<SystemException> { micro.step() }
         }
         it("si quiero ejecutar un paso con un programa cargado y no se inició debe dar error") {
             micro.loadProgram(
                 ProgramBuilder()
-                .NOP()
-                .build()
+                    .NOP()
+                    .build()
             )
             assertThrows<SystemException> { micro.step() }
         }
         it("si quiero ejecutar un programa manualmente más allá de la última instrucción debe dar error") {
             micro.loadProgram(
                 ProgramBuilder()
-                .NOP()
-                .build()
+                    .NOP()
+                    .build()
             )
             micro.start()
             micro.step()
@@ -48,17 +48,17 @@ class TestMicroprocessor : DescribeSpec({
             assertThrows<BusinessException> {
                 micro.loadProgram(
                     ProgramBuilder()
-                    .build()
+                        .build()
                 )
             }
         }
         it("ejecuta correctamente el programa NOP") {
             micro.loadProgram(
                 ProgramBuilder()
-                .NOP()
-                .NOP()
-                .NOP()
-                .build()
+                    .NOP()
+                    .NOP()
+                    .NOP()
+                    .build()
             )
             micro.run()
 
@@ -67,11 +67,11 @@ class TestMicroprocessor : DescribeSpec({
         it("ejecuta correctamente una suma chica") {
             micro.loadProgram(
                 ProgramBuilder()
-                .LODV(10)
-                .SWAP()
-                .LODV(22)
-                .ADD()
-                .build()
+                    .LODV(10)
+                    .SWAP()
+                    .LODV(22)
+                    .ADD()
+                    .build()
             )
             micro.run()
 
@@ -82,11 +82,11 @@ class TestMicroprocessor : DescribeSpec({
         it("ejecuta correctamente una suma grande") {
             micro.loadProgram(
                 ProgramBuilder()
-                .LODV(120)
-                .SWAP()
-                .LODV(15)
-                .ADD()
-                .build()
+                    .LODV(120)
+                    .SWAP()
+                    .LODV(15)
+                    .ADD()
+                    .build()
             )
             micro.run()
 
@@ -97,9 +97,9 @@ class TestMicroprocessor : DescribeSpec({
         it("podemos deshacer la instrucción SWAP") {
             micro.loadProgram(
                 ProgramBuilder()
-                .LODV(25)
-                .SWAP()
-                .build()
+                    .LODV(25)
+                    .SWAP()
+                    .build()
             )
             micro.start()
             micro.step()

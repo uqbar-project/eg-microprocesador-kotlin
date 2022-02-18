@@ -61,8 +61,8 @@ class MicroprocessorImpl : Microprocessor, Cloneable {
     override var bAcumulator: Byte = 0
     override var programCounter: Byte = 0
     var data = mutableMapOf<Int, Byte>()
-    var programStarted: Boolean = false
 
+    var programStarted: Boolean = false
     lateinit var programIterator: ProgramIterator
 
     override fun loadProgram(program: List<Byte>) {

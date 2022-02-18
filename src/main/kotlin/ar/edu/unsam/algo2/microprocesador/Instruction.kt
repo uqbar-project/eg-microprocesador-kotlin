@@ -3,7 +3,7 @@ package ar.edu.unsam.algo2.microprocesador
 import kotlin.comparisons.minOf
 import kotlin.comparisons.maxOf
 
-abstract class Instruction {
+abstract class Instruction : Cloneable {
     lateinit var microBefore: Microprocessor
 
     fun execute(micro: Microprocessor) {
@@ -19,6 +19,8 @@ abstract class Instruction {
     }
 
     open fun prepare(programIterator: ProgramIterator) {}
+
+    public override fun clone() = super.clone() as Instruction
 }
 
 class NOP : Instruction() {

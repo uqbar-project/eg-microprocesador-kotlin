@@ -18,8 +18,7 @@ object InstructionFactory {
     val instrucciones = mutableMapOf(1 to NOP(), 2 to ADD(), 5 to SWAP(), 9 to LODV(0))
 
     fun getInstruction(programIterator: ProgramIterator, codigoInstruccion: Byte): Instruction {
-        val instruccionAEjecutar = instrucciones[codigoInstruccion.toInt()]
-        if (instruccionAEjecutar === null) throw SystemException("La instrucción de código $codigoInstruccion no es reconocida")
+        val instruccionAEjecutar = instrucciones[codigoInstruccion.toInt()]?.clone() ?: throw SystemException("La instrucción de código $codigoInstruccion no es reconocida")
         instruccionAEjecutar.prepare(programIterator)
         return instruccionAEjecutar
     }

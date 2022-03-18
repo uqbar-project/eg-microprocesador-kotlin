@@ -15,6 +15,9 @@ jobs:
         with:
           java-version: 14
 
+      - run: |
+          chmod +x ./gradlew
+
       # Execute Gradle commands in GitHub Actions workflows
       # => https://github.com/marketplace/actions/gradle-command
       - uses: eskatos/gradle-command-action@v1

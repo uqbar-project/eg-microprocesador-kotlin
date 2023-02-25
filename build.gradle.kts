@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.6.10"
+    kotlin("jvm") version "1.8.10"
     jacoco
 }
 
@@ -12,7 +12,7 @@ repositories {
     mavenCentral()
 }
 
-val kotestVersion = "5.1.0"
+val kotestVersion = "5.5.5"
 
 dependencies {
     implementation(kotlin("stdlib"))
@@ -24,7 +24,7 @@ dependencies {
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "14"
+        jvmTarget = "17"
     }
 }
 
@@ -41,14 +41,14 @@ tasks.jacocoTestReport {
 }
 
 jacoco {
-    toolVersion = "0.8.7"
+    toolVersion = "0.8.8"
 }
 
 tasks.jacocoTestReport {
     reports {
-        xml.isEnabled = true
-        csv.isEnabled = false
-        html.isEnabled = false
+        xml.required.set(true)
+        csv.required.set(false)
+        html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
     }
 }
 
